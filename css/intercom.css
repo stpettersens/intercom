@@ -1,0 +1,58 @@
+body {
+	font-family: "Verdana", "Helvetica", sans-serif;
+}
+
+.navbar-header {
+	float: left;
+	padding: 15px;
+	text-align: center;
+	width: 100%;
+
+}
+
+.navbar-brand {
+	float: none;
+	font-family: "Kazmann Sans";
+	font-size: 40pt;
+}
+
+.footer {
+	top: 300px;
+}
+
+#waveform {
+	padding-left: 0;
+	padding-right: 0;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+	z-index: 0;
+}
+
+#options {
+	font-size: 10pt;
+}
+
+#message {
+	color: gray;
+	padding-left: 0;
+	padding-right: 0;
+	margin-top: 60px;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+	text-align: center;
+	vertical-align: middle;
+	width: 700px;
+	z-index: 1;
+}
+
+#message a {
+	color: #000000;
+	text-decoration: none;
+	border-bottom: 1px dotted #000000;
+}
+
+#message a:hover {
+	border: none;
+}

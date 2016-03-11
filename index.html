@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Intercom</title>
+		<link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="css/intercom.css">
+		<script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
+		<script type="text/javascript">window.$ = window.jQuery = require('jquery');</script>
+		<script type="text/javascript" src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="node_modules/vue/dist/vue.js"></script>
+		<script type="text/javascript" src="js/audio.js"></script>
+		<script type="text/javascript" src="js/intercom.vue.js"></script>
+		<meta charset="utf-8">
+	</head>
+	<body id="intercom">
+		<nav class="navbar navbar-default">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#" v-on:click="displayAbout">Intercom</a>
+			</div>
+		</nav>
+		<div class="container" id="contacts">
+			<div class="col-sm-6">
+				<div class="list-group">
+					<a href="#" class="list-group-item" v-for="contact in contacts">
+						<h4 class="list-group-item-heading">
+							{{contact.name}}
+						</h4>
+					</a>
+				</div>
+				<div id="message">
+					You have no contacts,
+					<a href="#" v-on:click="addContact">add one</a> now.
+				</div>
+			</div>
+		</div>
+		<nav class="footer navbar navbar-default">
+			<div class="collapse navbar-collapse" id="intercom-navbar-collapse">
+				<ul id="options" class="nav navbar-nav">
+					<li><a id="addContact" href="#" v-on:click="addContact">Add contact</a></li>
+					<li><a id="toggleBroadcast" href="#on" v-on:click="toggleBroadcast">Broadcast on</a></li>
+				</ul>
+			</div>
+		</nav>
+		<canvas id="waveform" width="650" height="200">
+	</body>
+</html>
