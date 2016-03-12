@@ -95,7 +95,7 @@ class AudioIO {
 				audio: true,
 				video: false,
 		}, AudioIO.getStream, function(e) {
-			alert('Error getting audio.\nIs microphone plugged in?');
+			$('#error').css('display', 'block');
 			console.log(e);
 		});
 	}

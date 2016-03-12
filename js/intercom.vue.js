@@ -20,12 +20,35 @@ window.onload = function() {
 		},
 		methods: {
 			displayAbout: function() {
-				/*storage.get('timestamp', function(err, data) {
-					alert(data.ts);
-				});*/
+				let html = '<div class="about">'
+				html += '<span class="navbar-brand">Intercom</span>';
+				html += '<br><p>version 0.1</p>';
+				html += '<hr><p>P2P voice chat application.</p>'
+				html += '<p>Copyright &copy; 2016 Sam Saint-Pettersen.</p>';
+				html += '<p>Released under the MIT License.</p>';
+				html += `<hr><p>Using electron ${process.versions.electron} + node.js ${process.versions.node}`;
+				html += ` + chromium ${process.versions.chrome}</p>`;
+				html += '<p>Intercom make uses of the following modules:</p>';
+				html += '<textarea></textarea>';
+				html += '</div>';
+				bootbox.dialog({
+					message: html,
+					title: 'About Intercom',
+					buttons: {
+						close: {
+							label: 'Close',
+							className: 'btn-default btn-close',
+							callback: function() {}
+						}
+					}
+				});
 			},
 			addContact: function() {
 				// ...
+			},
+			retryMic: function() {
+				AudioIO.init();
+				$('#error').css('display', 'none');
 			},
 			toggleButton: function(btn, first, second, caption) {
 				let on = null;
@@ -43,9 +66,14 @@ window.onload = function() {
 			},
 			toggleBroadcast: function() {
 				let on = this.toggleButton('#toggleBroadcast', '#on', '#off', 'Broadcast');
-				//storage.set('timestamp', { ts: Date.now() }, function(){});
 				if(on) AudioIO.init();
 			}
 		}
 	});
 }
+
+/*storage.get('timestamp', function(err, data) {
+	alert(data.ts);
+});*/
+
+//storage.set('timestamp', { ts: Date.now() }, function(){});

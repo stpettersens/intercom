@@ -19,6 +19,8 @@
     "electron-prebuilt": "^0.36.10"
   },
   "dependencies": {
+    "binaryjs": "^0.2.1",
+    "bootbox": "^4.4.0",
     "bootstrap": "^3.3.6",
     "electron-json-storage": "^2.0.0",
     "jquery": "^2.2.1",

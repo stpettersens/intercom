@@ -16,6 +16,11 @@ body {
 	font-size: 40pt;
 }
 
+.about {
+	font-size: 9pt;
+	text-align: center;
+}
+
 .footer {
 	top: 300px;
 }
@@ -31,6 +36,21 @@ body {
 
 #options {
 	font-size: 10pt;
+}
+
+#error {
+	display: none;
+	text-align: center;
+}
+
+#error a {
+	color: #a94442;
+	text-decoration: none;
+	border-bottom: 1px dotted #a94442;
+}
+
+#error a:hover {
+	border:none;
 }
 
 #message {

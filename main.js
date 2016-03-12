@@ -10,7 +10,7 @@ let mainWindow;
 function createWindow() {
 	mainWindow = new BrowserWindow({
 		width: 1200, 
-		height: 600,
+		height: 670,
 		resizable: false,
 	});
 	mainWindow.webContents.openDevTools(); // !

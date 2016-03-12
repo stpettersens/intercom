@@ -7,6 +7,7 @@
 		<script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
 		<script type="text/javascript">window.$ = window.jQuery = require('jquery');</script>
 		<script type="text/javascript" src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="node_modules/bootbox/bootbox.min.js"></script>
 		<script type="text/javascript" src="node_modules/vue/dist/vue.js"></script>
 		<script type="text/javascript" src="js/audio.js"></script>
 		<script type="text/javascript" src="js/intercom.vue.js"></script>
@@ -18,6 +19,9 @@
 				<a class="navbar-brand" href="#" v-on:click="displayAbout">Intercom</a>
 			</div>
 		</nav>
+		<div id="error" class="alert alert-danger fade in" role="alert">
+			<strong>Is microphone connected?</strong> <a href="#" v-on:click="retryMic">Retry microphone</a>.
+		</div>
 		<div class="container" id="contacts">
 			<div class="col-sm-6">
 				<div class="list-group">
