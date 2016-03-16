@@ -1,0 +1,15 @@
+{
+  "name": "intercom-server",
+  "version": "1.0.0",
+  "description": "Intercom server",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Sam Saint-Pettersen <s.stpettersen+github@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "binaryjs": "^0.2.1",
+    "wav": "^1.0.0"
+  }
+}

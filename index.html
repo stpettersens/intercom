@@ -1,4 +1,10 @@
 <!DOCTYPE html>
+<!--
+    Intercom.
+    P2P chat application.
+    Copyright 2016 Sam Saint-Pettersen.
+    Released under the MIT/X11 License.
+-->
 <html>
 	<head>
 		<title>Intercom</title>
@@ -9,6 +15,7 @@
 		<script type="text/javascript" src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="node_modules/bootbox/bootbox.min.js"></script>
 		<script type="text/javascript" src="node_modules/vue/dist/vue.js"></script>
+		<script type="text/javascript" src="js/client.js"></script>
 		<script type="text/javascript" src="js/audio.js"></script>
 		<script type="text/javascript" src="js/intercom.vue.js"></script>
 		<meta charset="utf-8">
@@ -20,7 +27,8 @@
 			</div>
 		</nav>
 		<div id="error" class="alert alert-danger fade in" role="alert">
-			<strong>Is microphone connected?</strong> <a href="#" v-on:click="retryMic">Retry microphone</a>.
+			<strong>Is microphone connected?</strong> 
+			<a href="#" v-on:click="retryMic">Retry microphone</a>.
 		</div>
 		<div class="container" id="contacts">
 			<div class="col-sm-6">

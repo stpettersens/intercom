@@ -1,22 +1,32 @@
+/*
+    Intercom.
+    P2P chat application.
+    Copyright 2016 Sam Saint-Pettersen.
+    Released under the MIT/X11 License.
+*/
+
+/*
+	Some code adapted from:
+	* https://henri.io/posts/streaming-microphone-input-with-flask.html
+	* https://webaudiodemos.appspot.com/AudioRecorder/js/main.js
+	* https://github.com/gabrielpoca/browser-pcm-stream
+*/
+
 'use strict';
 
-const Recorder = require('recorderjs');
-const MicrophoneStream = require('microphone-stream');
-
+let on = false;
 let audioContext = new AudioContext();
-let audioInput = null,
-	realAudioInput = null,
-	inputPoint = null,
-	micStream = null,
-	audioRecorder = null,
-	analyser = null,
-	canvas = null,
-	ctx = null,
-	canvasWidth = 0, 
-	canvasHeight = 0,
-	bufferLength = 0,
-	dataArray = [],
-	recIndex = 0;
+let audioInput = null;
+let realAudioInput = null;
+let inputPoint = null;
+let micStream = null;
+let analyser = null;
+let canvas = null;
+let ctx = null;
+let canvasWidth = 0; 
+let canvasHeight = 0;
+let bufferLength = 0;
+let dataArray = [];
 
 class AudioIO {
 
@@ -62,33 +72,56 @@ class AudioIO {
 		
 		// Create an AudioNode from the stream.
 		realAudioInput = audioContext.createMediaStreamSource(stream);
+
+		let recorder = audioContext.createScriptProcessor(2048, 1, 1);
+		recorder.onaudioprocess = AudioIO.onAudio;
+
+		realAudioInput.connect(recorder);
+		recorder.connect(audioContext.destination);
+
 		audioInput = realAudioInput;
 		audioInput.connect(inputPoint);
+
+		audioInput = AudioIO.convertToMono(inputPoint);
 
 		analyser = audioContext.createAnalyser();
 		analyser.fftSize = 2048;
 		inputPoint.connect(analyser);
-
-		audioRecorder = new Recorder(inputPoint);
 
 		let zeroGain = audioContext.createGain();
 		zeroGain.gain.value = 0.0;
 		inputPoint.connect(zeroGain);
 		zeroGain.connect(audioContext.destination);
 		AudioIO.displayWaveform();
+	}
 
-		micStream = new MicrophoneStream(stream);
-		micStream.on('data', function(chunk) {
-			let raw = MicrophoneStream.toRaw(chunk);
-			//console.log(raw);
-		});
+	static convertFloat32ToInt16(buffer) {
+		let l = buffer.length;
+		let buf = new Int16Array(l);
+		while(l--) {
+			buf[l] = buffer[l] * 0xFFFF;
+		}
+		return buf.buffer;
+	}
 
-		micStream.on('format', function(format) {
-			console.log(format);
-		});
+	static convertToMono(input) {
+		let splitter = audioContext.createChannelSplitter(2);
+		let merger = audioContext.createChannelMerger(2);
+
+		input.connect(splitter);
+		splitter.connect(merger, 0, 0);
+		splitter.connect(merger, 0, 1);
+		return merger;
+	}
+
+	static onAudio(e) {
+		let mic = e.inputBuffer.getChannelData(0);
+		let data = AudioIO.convertFloat32ToInt16(mic);
+		if(on) client.emit('broadcast', data);
 	}
 
 	static init() {
+		on = true;
 		canvas = document.getElementById('waveform');
 		ctx = canvas.getContext('2d');
 		navigator.webkitGetUserMedia({
@@ -98,6 +131,11 @@ class AudioIO {
 			$('#error').css('display', 'block');
 			console.log(e);
 		});
+	}
+
+	static end() {
+		on = false;
+		client.emit('end');
 	}
 }
 

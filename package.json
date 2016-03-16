@@ -24,9 +24,8 @@
     "bootstrap": "^3.3.6",
     "electron-json-storage": "^2.0.0",
     "jquery": "^2.2.1",
-    "microphone-stream": "^3.0.2",
     "n2n": "0.0.7",
-    "recorderjs": "^1.0.1",
+    "typedarray-to-buffer": "^3.1.2",
     "vue": "^1.0.17"
   }
 }

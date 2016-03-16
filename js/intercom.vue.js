@@ -26,7 +26,8 @@ window.onload = function() {
 				html += '<hr><p>P2P voice chat application.</p>'
 				html += '<p>Copyright &copy; 2016 Sam Saint-Pettersen.</p>';
 				html += '<p>Released under the MIT License.</p>';
-				html += `<hr><p>Using electron ${process.versions.electron} + node.js ${process.versions.node}`;
+				html += `<hr><p>Using electron ${process.versions.electron}`
+				html += ` + node.js ${process.versions.node}`;
 				html += ` + chromium ${process.versions.chrome}</p>`;
 				html += '<p>Intercom make uses of the following modules:</p>';
 				html += '<textarea></textarea>';
@@ -67,6 +68,7 @@ window.onload = function() {
 			toggleBroadcast: function() {
 				let on = this.toggleButton('#toggleBroadcast', '#on', '#off', 'Broadcast');
 				if(on) AudioIO.init();
+				else AudioIO.end();
 			}
 		}
 	});
