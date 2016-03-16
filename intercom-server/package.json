@@ -10,6 +10,8 @@
   "license": "MIT",
   "dependencies": {
     "binaryjs": "^0.2.1",
+    "ogg": "^1.2.4",
+    "vorbis": "^0.2.1",
     "wav": "^1.0.0"
   }
 }
