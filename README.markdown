@@ -1,3 +1,3 @@
 ### Intercom
 
-> P2P voice chat client
+> P2P chat application.
