@@ -16,16 +16,16 @@
   "author": "Sam Saint-Pettersen <s.stpettersen+github@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "electron-prebuilt": "^0.36.10"
+    "electron-prebuilt": "^0.36.10",
+    "jquery": "^2.2.1",
+    "bootbox": "^4.4.0",
+    "bootstrap": "^3.3.6",
+    "vue": "^1.0.17"
   },
   "dependencies": {
     "binaryjs": "^0.2.1",
-    "bootbox": "^4.4.0",
-    "bootstrap": "^3.3.6",
     "electron-json-storage": "^2.0.0",
-    "jquery": "^2.2.1",
     "n2n": "0.0.7",
     "typedarray-to-buffer": "^3.1.2",
-    "vue": "^1.0.17"
   }
 }
