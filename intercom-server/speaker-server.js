@@ -7,33 +7,24 @@
 
 'use strict';
 
+const fs = require('fs');
 const http = require('http');
-const wav = require('wav');
-const ogg = require('ogg');
-const vorbis = require('vorbis');
+const Speaker = require('speaker');
 const BinaryServer = require('binaryjs').BinaryServer;
 const server = http.createServer();
 
 let bs = BinaryServer({server: server});
 let out = null;
 
+let speaker = new Speaker({
+	channels: 1,
+	sampleRate: 48000,
+	bitDepth: 16
+});
+
 bs.on('connection', function(client) {
 	client.on('stream', function(stream, meta) {
-		out = new wav.FileWriter('out.wav', {
-			channels: 1,
-			sampleRate: 48000,
-			bitDepth: 16
-		});
-		stream.pipe(out);
-		stream.on('end', function() {
-			out.end();
-		});
-	});
-
-	client.on('close', function() {
-		if(out != null) {
-			out.end();
-		}
+		stream.pipe(speaker);
 	});
 });
 

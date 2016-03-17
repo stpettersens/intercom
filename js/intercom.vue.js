@@ -1,3 +1,10 @@
+/*
+    Intercom.
+    P2P chat application.
+    Copyright 2016 Sam Saint-Pettersen.
+    Released under the MIT/X11 License.
+*/
+
 'use strict';
 
 const storage = require('electron-json-storage');
