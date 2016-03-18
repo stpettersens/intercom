@@ -7,15 +7,13 @@
 
 'use strict';
 
-const http = require('http');
 const wav = require('wav');
 const BinaryServer = require('binaryjs').BinaryServer;
-const server = http.createServer();
 
-let bs = BinaryServer({server: server});
+let server = BinaryServer({port: 8080});
 let out = null;
 
-bs.on('connection', function(client) {
+server.on('connection', function(client) {
 	client.on('stream', function(stream, meta) {
 		out = new wav.FileWriter('out.wav', {
 			channels: 1,
@@ -34,5 +32,3 @@ bs.on('connection', function(client) {
 		}
 	});
 });
-
-server.listen(43770);
