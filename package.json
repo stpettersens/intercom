@@ -16,10 +16,11 @@
   "author": "Sam Saint-Pettersen <s.stpettersen+github@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "electron-prebuilt": "^0.36.10",
-    "jquery": "^2.2.1",
     "bootbox": "^4.4.0",
     "bootstrap": "^3.3.6",
+    "electron-prebuilt": "^0.36.10",
+    "gulp": "^3.9.1",
+    "jquery": "^2.2.1",
     "vue": "^1.0.17"
   },
   "dependencies": {

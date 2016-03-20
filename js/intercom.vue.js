@@ -27,7 +27,8 @@ window.onload = function() {
 		},
 		methods: {
 			displayAbout: function() {
-				let html = '<div class="about">'
+				let html;
+				html  = '<div class="about">'
 				html += '<span class="navbar-brand">Intercom</span>';
 				html += '<br><p>version 0.1</p>';
 				html += '<hr><p>P2P voice chat application.</p>'
@@ -37,7 +38,6 @@ window.onload = function() {
 				html += ` + node.js ${process.versions.node}`;
 				html += ` + chromium ${process.versions.chrome}</p>`;
 				html += '<p>Intercom make uses of the following modules:</p>';
-				html += '<textarea></textarea>';
 				html += '</div>';
 				bootbox.dialog({
 					message: html,

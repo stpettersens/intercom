@@ -19,7 +19,7 @@ body {
 
 .navbar-brand {
 	float: none;
-	font-family: "Kazmann Sans";
+	font-family: "Kazmann Sans", "Helvetica", sans-serif;
 	font-size: 40pt;
 }
 
