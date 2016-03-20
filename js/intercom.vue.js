@@ -51,8 +51,27 @@ window.onload = function() {
 					}
 				});
 			},
+			connectServer: function() {
+				bootbox.prompt({
+					title: 'Connect to chat server'
+					value: 'localhost:8080',
+					callback: function(result) {
+						if(result !== null) {
+							let server = result.split(':');
+							storage.set('server', {
+								server: server[0],
+								port: server[1]
+							}, function() {});
+						}
+					}
+				});
+			},
 			addContact: function() {
 				// ...
+				storage.get('server', function(err, data) {
+					alert(data.server);
+					alert(data.port);
+				});
 			},
 			retryMic: function() {
 				AudioIO.init();
