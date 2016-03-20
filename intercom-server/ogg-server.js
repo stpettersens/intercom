@@ -7,19 +7,16 @@
 
 'use strict';
 
-const fs = require('fs');
-const http = require('http');
 const ogg = require('ogg');
 const vorbis = require('vorbis');
 const BinaryServer = require('binaryjs').BinaryServer;
-const server = http.createServer();
 
-let bs = BinaryServer({server: server});
+let server = BinaryServer({port: 8080});
 let oe = new ogg.Encoder();
 let ve = new vorbis.Encoder();
 let out = null;
 
-bs.on('connection', function(client) {
+server.on('connection', function(client) {
 	client.on('stream', function(stream, meta) {
 		stream.pipe(ve);
 		stream.on('end', function() {
@@ -35,5 +32,3 @@ bs.on('connection', function(client) {
 		}
 	});
 });
-
-server.listen(43770);

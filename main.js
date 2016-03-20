@@ -9,11 +9,11 @@ let mainWindow;
 
 function createWindow() {
 	mainWindow = new BrowserWindow({
-		width: 1200, 
+		width: 800, 
 		height: 670,
 		resizable: false,
 	});
-	mainWindow.webContents.openDevTools(); // !
+	//mainWindow.webContents.openDevTools(); // !
 	//mainWindow.setMenuBarVisibility(false);
 	mainWindow.loadURL(`file://${__dirname}/index.html`);
 }

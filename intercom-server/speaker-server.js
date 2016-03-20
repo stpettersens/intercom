@@ -7,13 +7,10 @@
 
 'use strict';
 
-const fs = require('fs');
-const http = require('http');
 const Speaker = require('speaker');
 const BinaryServer = require('binaryjs').BinaryServer;
-const server = http.createServer();
 
-let bs = BinaryServer({server: server});
+let server = BinaryServer({port: 8080});
 let out = null;
 
 let speaker = new Speaker({
@@ -22,10 +19,8 @@ let speaker = new Speaker({
 	bitDepth: 16
 });
 
-bs.on('connection', function(client) {
+server.on('connection', function(client) {
 	client.on('stream', function(stream, meta) {
 		stream.pipe(speaker);
 	});
 });
-
-server.listen(43770);
