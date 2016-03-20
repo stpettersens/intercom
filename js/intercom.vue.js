@@ -53,7 +53,7 @@ window.onload = function() {
 			},
 			connectServer: function() {
 				bootbox.prompt({
-					title: 'Connect to chat server'
+					title: 'Connect to chat server',
 					value: 'localhost:8080',
 					callback: function(result) {
 						if(result !== null) {
@@ -68,10 +68,10 @@ window.onload = function() {
 			},
 			addContact: function() {
 				// ...
-				storage.get('server', function(err, data) {
+				/*storage.get('server', function(err, data) {
 					alert(data.server);
 					alert(data.port);
-				});
+				});*/
 			},
 			retryMic: function() {
 				AudioIO.init();
@@ -99,9 +99,3 @@ window.onload = function() {
 		}
 	});
 }
-
-/*storage.get('timestamp', function(err, data) {
-	alert(data.ts);
-});*/
-
-//storage.set('timestamp', { ts: Date.now() }, function(){});

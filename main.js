@@ -16,11 +16,11 @@ let mainWindow;
 
 function createWindow() {
 	mainWindow = new BrowserWindow({
-		width: 800, 
+		width: 1600, // 800
 		height: 540,
 		resizable: false,
 	});
-	//mainWindow.webContents.openDevTools(); // !
+	mainWindow.webContents.openDevTools(); // !
 	//mainWindow.setMenuBarVisibility(false);
 	mainWindow.loadURL(`file://${__dirname}/index.html`);
 }
