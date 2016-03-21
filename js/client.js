@@ -10,10 +10,13 @@
 const toBuffer = require('typedarray-to-buffer');
 const BinaryClient = require('binaryjs').BinaryClient;
 
-let client = BinaryClient('ws://localhost:8080');
+let server = sessionStorage.getItem('server');
 let audioStream = null;
 
+let client = BinaryClient('ws://' + server);
+
 client.on('open', function() {
+	console.log(`Connecting to server: ${server}`);
 	audioStream = client.createStream();
 });
 

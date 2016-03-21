@@ -9,6 +9,10 @@
 
 const storage = require('electron-json-storage');
 
+if(sessionStorage.getItem('server') == null) {
+	sessionStorage.setItem('server', 'localhost:8080');
+}
+
 window.onload = function() {
 	new Vue({
 		el: '#intercom',
@@ -54,24 +58,22 @@ window.onload = function() {
 			connectServer: function() {
 				bootbox.prompt({
 					title: 'Connect to chat server',
-					value: 'localhost:8080',
+					value: sessionStorage.getItem('server'),
 					callback: function(result) {
 						if(result !== null) {
 							let server = result.split(':');
 							storage.set('server', {
-								server: server[0],
+								host: server[0],
 								port: server[1]
 							}, function() {});
+							sessionStorage.setItem('server', result);
+							window.location.reload();
 						}
 					}
 				});
 			},
 			addContact: function() {
 				// ...
-				/*storage.get('server', function(err, data) {
-					alert(data.server);
-					alert(data.port);
-				});*/
 			},
 			retryMic: function() {
 				AudioIO.init();

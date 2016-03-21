@@ -11,7 +11,6 @@ const Speaker = require('speaker');
 const BinaryServer = require('binaryjs').BinaryServer;
 
 let server = BinaryServer({port: 8080});
-let out = null;
 
 let speaker = new Speaker({
 	channels: 1,

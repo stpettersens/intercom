@@ -1,3 +1,4 @@
 node_modules/
 css/dist/
 js/dist/
+*.wav
