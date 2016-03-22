@@ -24,6 +24,10 @@ client.on('broadcast', function(data) {
 	audioStream.write(toBuffer(data));
 });
 
+client.on('receive', function(data) {
+	// ...
+});
+
 client.on('end', function() {
 	audioStream.end();
 });
