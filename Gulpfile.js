@@ -5,7 +5,18 @@
 'use strict';
 
 const gulp = require('gulp'),
+	 vuecc = require('gulp-vuecc'),
 	 clean = require('gulp-rimraf');
+
+gulp.task('vue', function() {
+	return gulp.src('*.vue.js', {read: false})
+	.pipe(vuecc({
+		header: false,
+		verbose: false,
+		inputExt: '.vue.js',
+		ouputExt: '.js'
+	}));
+});
 
 gulp.task('dist-css', function() {
 	gulp.src([
@@ -28,4 +39,5 @@ gulp.task('clean', function() {
 	.pipe(clean());
 });
 
-gulp.task('default', ['dist-css','dist-js'], function(){});
+gulp.task('default', ['vue'], function(){});
+gulp.task('dist', ['dist-css','dist-js'], function(){});

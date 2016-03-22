@@ -20,6 +20,7 @@
     "electron-prebuilt": "^0.36.10",
     "gulp": "^3.9.1",
     "gulp-rimraf": "^0.2.0",
+    "gulp-vuecc": "^0.1.0",
     "jquery": "^2.2.1",
     "vue": "^1.0.17"
   },
