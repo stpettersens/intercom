@@ -25,6 +25,9 @@
 				<a class="navbar-brand" href="#" v-on:click="displayAbout">Intercom</a>
 			</div>
 		</nav>
+		<div id="init" class="alert alert-warning fade in" role="alert">
+			<strong>Initializing...</strong>
+		</div>
 		<div id="error" class="alert alert-danger fade in" role="alert">
 			<strong>Is microphone connected?</strong> 
 			<a href="#" v-on:click="retryMic">Retry microphone</a>.

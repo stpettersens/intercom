@@ -9,10 +9,6 @@
 
 const storage = require('electron-json-storage');
 
-if(sessionStorage.getItem('server') == null) {
-	sessionStorage.setItem('server', 'localhost:8080');
-}
-
 window.onload = function() {
 	new Vue({
 		el: '#intercom',
@@ -27,7 +23,21 @@ window.onload = function() {
 			contacts: []
 		},
 		ready: function() {
-			// ...
+			if(sessionStorage.getItem('init') === null) {
+				sessionStorage.setItem('init', true);
+				window.location.reload();
+			}
+			storage.get('server', function(err, data) {
+				$('#init').css('display', 'none');
+				if(data) {
+					let host = data.host;
+					let port = data.port;
+					sessionStorage.setItem('server', `${host}:${port}`);
+				}
+				else {
+					sessionStorage.setItem('server', 'localhost:8080');
+				}
+			});
 		},
 		methods: {
 			displayAbout: function() {

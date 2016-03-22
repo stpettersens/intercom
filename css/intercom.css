@@ -45,6 +45,10 @@ body {
 	font-size: 10pt;
 }
 
+#init {
+	text-align: center;
+}
+
 #error {
 	display: none;
 	text-align: center;

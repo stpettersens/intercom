@@ -15,17 +15,9 @@
 'use strict';
 
 let on = false;
-let audioContext = new AudioContext();
-let audioInput = null;
-let realAudioInput = null;
-let inputPoint = null;
-let micStream = null;
-let analyser = null;
-let canvas = null;
-let ctx = null;
-let canvasWidth = 0; 
-let canvasHeight = 0;
-let bufferLength = 0;
+let audioContext, audioInput, realAudioInput = null;
+let inputPoint, micStream, analyser, canvas, ctx = null;
+let canvasWidth, canvasHeight, bufferLength = 0;
 let dataArray = [];
 
 class AudioIO {
@@ -122,6 +114,7 @@ class AudioIO {
 
 	static init() {
 		on = true;
+		audioContext = new AudioContext();
 		canvas = document.getElementById('waveform');
 		ctx = canvas.getContext('2d');
 		navigator.webkitGetUserMedia({

@@ -13,7 +13,7 @@ const BinaryClient = require('binaryjs').BinaryClient;
 let server = sessionStorage.getItem('server');
 let audioStream = null;
 
-let client = BinaryClient('ws://' + server);
+let client = BinaryClient(`ws://${server}`);
 
 client.on('open', function() {
 	console.log(`Connecting to server: ${server}`);
