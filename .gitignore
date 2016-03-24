@@ -1,4 +1,13 @@
 node_modules/
 css/dist/
 js/dist/
+js/intercom.js
+typings/bootbox/
+typings/electron-json-storage/
+typings/github-electron/
+typings/jquery/
+typings/node/
+typings/vue/
+typings/tsd.d.ts
+tsd.json
 *.wav

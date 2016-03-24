@@ -1,21 +1,50 @@
 /*
-	Gulpfile to build intercom.
+	Gulpfile to build Intercom.
 */
 
 'use strict';
 
 const gulp = require('gulp'),
 	 vuecc = require('gulp-vuecc'),
+	   tsc = require('gulp-typescript'),
+	insert = require('gulp-insert'),
 	 clean = require('gulp-rimraf');
 
-gulp.task('vue', function() {
-	return gulp.src('*.vue.js', {read: false})
+let header = [
+	'/*', '\tIntercom.', '\tP2P chat application.', 
+	'\tCopyright 2016 Sam Saint-Pettersen.',
+	'\tReleased under the MIT/X11 License.', '*/'
+];
+
+let _import = [
+	"\n\n'use strict';\n", 
+	"var storage = require('electron-json-storage');\n\n"
+];
+
+gulp.task('vuecc', function() {
+	return gulp.src('intercom.vue.ts', {read: false})
 	.pipe(vuecc({
-		header: false,
+		header: true,
 		verbose: false,
-		inputExt: '.vue.js',
-		ouputExt: '.js'
+		inputExt: '.vue.ts',
+		ouputExt: '.ts'
 	}));
+});
+
+gulp.task('tsc', ['vuecc'], function() {
+	return gulp.src('intercom.ts')
+	.pipe(tsc({
+		removeComments: true,
+		out: 'intercom.js'
+	}))
+	.pipe(insert.prepend(_import.join('\n')))
+	.pipe(insert.prepend(header.join('\n')))
+	.pipe(gulp.dest('js'));
+});
+
+gulp.task('clean-ts', ['tsc'], function() {
+	return gulp.src('intercom.ts', {read: false})
+	.pipe(clean());
 });
 
 gulp.task('dist-css', function() {
@@ -39,5 +68,5 @@ gulp.task('clean', function() {
 	.pipe(clean());
 });
 
-gulp.task('default', ['vue'], function(){});
+gulp.task('default', ['clean-ts'], function(){});
 gulp.task('dist', ['dist-css','dist-js'], function(){});

@@ -5,32 +5,30 @@
     Released under the MIT/X11 License.
 */
 
-'use strict';
+/// <reference path="typings/node/node.d.ts" />
+/// <reference path="typings/bootbox/bootbox.d.ts" />
+/// <reference path="typings/jquery/jquery.d.ts" />
+/// <reference path="typings/electron-json-storage/electron-json-storage.d.ts" />
+/// <reference path="typings/intercom/vue-instance.ts" />
+/// <reference path="typings/intercom/audio.ts" />
+/// <reference path="typings/intercom/configuration.ts" />
 
-const storage = require('electron-json-storage');
+import $ = require('jquery');
+import storage = require('electron-json-storage');
 
 class Intercom extends VueInstance {
 	constructor() {
 		super();
 		this.el = '#intercom';
-		this.data = {
-			contact: {
-				username: '',
-				lastName: '',
-				firstName: '',
-				group: '',
-				date: ''
-			},
-			contacts: []
-		};
+		this.data = '!TODO';
 	}
 
-	ready() {
+	public ready(): void {
 		if(sessionStorage.getItem('init') === null) {
-			sessionStorage.setItem('init', true);
+			sessionStorage.setItem('init', 'true');
 			window.location.reload();
 		}
-		storage.get('server', function(err, data) {
+		storage.get('server', function(err, data: Configuration) {
 			$('#init').css('display', 'none');
 			if(data) {
 				let host = data.host;
@@ -41,9 +39,9 @@ class Intercom extends VueInstance {
 				sessionStorage.setItem('server', 'localhost:43370');
 			}
 		});
-	}
+	};
 
-	toggleButton(btn, first, second, caption) {
+	private toggleButton(btn, first, second, caption): void {
 		let on = null;
 		if($(btn).attr('href') == first) {
 			$(btn).attr('href', second);
@@ -56,9 +54,9 @@ class Intercom extends VueInstance {
 			on = true;
 		}
 		return on;
-	}
+	};
 
-	displayAbout() {
+	public displayAbout(): void {
 		let html;
 		html  = '<div class="about">';
 		html += '<span class="navbar-brand">Intercom</span>';
@@ -82,9 +80,9 @@ class Intercom extends VueInstance {
 				}
 			}
 		});
-	}
+	};
 
-	connectServer() {
+	public connectServer(): void {
 		bootbox.prompt({
 			title: 'Connect to chat server',
 			value: sessionStorage.getItem('server'),
@@ -93,27 +91,27 @@ class Intercom extends VueInstance {
 					let server = result.split(':');
 					storage.set('server', {
 						host: server[0],
-						port: server[1]
+						port: parseInt(server[1])
 					}, function() {});
 					sessionStorage.setItem('server', result);
 					window.location.reload();
 				}
 			}
 		});
-	}
+	};
 
-	addContact() {
+	public addContact(): void {
 		// ...
-	}
+	};
 
-	retryMic() {
+	public retryMic(): void {
 		AudioIO.init();
 		$('#error').css('display', 'none');
-	}
+	};
 
-	toggleBroadcast() {
+	public toggleBroadcast(): void {
 		let on = this.toggleButton('#toggleBroadcast', '#on', '#off', 'Broadcast');
 		if(on) AudioIO.init();
 		else AudioIO.end();
-	}
-}
+	};
+};
