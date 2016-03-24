@@ -7,7 +7,9 @@
 const gulp = require('gulp'),
 	 vuecc = require('gulp-vuecc'),
 	   tsc = require('gulp-typescript'),
+	   zip = require('gulp-vinyl-zip'),
 	insert = require('gulp-insert'),
+  electron = require('gulp-atom-electron'),
 	 clean = require('gulp-rimraf');
 
 let header = [
@@ -49,19 +51,28 @@ gulp.task('clean-build', ['tsc'], function() {
 });
 
 gulp.task('dist-css', function() {
-	gulp.src([
+	return gulp.src([
 		'node_modules/bootstrap/dist/css/bootstrap.css'
 	])
 	.pipe(gulp.dest('css/dist'));
 });
 
 gulp.task('dist-js', function() {
-	gulp.src([
+	return gulp.src([
 		'node_modules/bootstrap/dist/js/bootstrap.min.js',
 		'node_modules/bootbox/bootbox.min.js',
 		'node_modules/vue/dist/vue.js'
 	])
 	.pipe(gulp.dest('js/dist'));
+});
+
+gulp.task('dist-win', function() {
+	return gulp.src('css/**')
+	.pipe(electron({
+		version: '0.36.10', 
+		platform: 'win32'
+	}))
+	.pipe(gulp.dest('app'));
 });
 
 gulp.task('clean', function() {

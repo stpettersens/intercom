@@ -20,9 +20,11 @@
     "bootstrap": "^3.3.6",
     "electron-prebuilt": "^0.36.10",
     "gulp": "^3.9.1",
+    "gulp-atom-electron": "^1.5.2",
     "gulp-insert": "^0.5.0",
     "gulp-rimraf": "^0.2.0",
     "gulp-typescript": "^2.12.1",
+    "gulp-vinyl-zip": "^1.2.2",
     "gulp-vuecc": "^0.1.0",
     "vue": "^1.0.17"
   },
