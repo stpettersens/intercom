@@ -18,7 +18,7 @@ let header = [
 
 let _import = [
 	"\n\n'use strict';\n", 
-	"var storage = require('electron-json-storage');\n\n"
+	"const storage = require('electron-json-storage');\n\n"
 ];
 
 gulp.task('vuecc', function() {
@@ -34,16 +34,17 @@ gulp.task('vuecc', function() {
 gulp.task('tsc', ['vuecc'], function() {
 	return gulp.src('intercom.ts')
 	.pipe(tsc({
-		removeComments: true,
-		out: 'intercom.js'
+		target: 'ES6',
+		isolatedModules: true,
+		removeComments: true
 	}))
 	.pipe(insert.prepend(_import.join('\n')))
 	.pipe(insert.prepend(header.join('\n')))
 	.pipe(gulp.dest('js'));
 });
 
-gulp.task('clean-ts', ['tsc'], function() {
-	return gulp.src('intercom.ts', {read: false})
+gulp.task('clean-build', ['tsc'], function() {
+	return gulp.src(['intercom.ts', 'intercom.js'], {read: false})
 	.pipe(clean());
 });
 
@@ -68,5 +69,5 @@ gulp.task('clean', function() {
 	.pipe(clean());
 });
 
-gulp.task('default', ['clean-ts'], function(){});
+gulp.task('default', ['clean-build'], function(){});
 gulp.task('dist', ['dist-css','dist-js'], function(){});

@@ -20,7 +20,14 @@ class Intercom extends VueInstance {
 	constructor() {
 		super();
 		this.el = '#intercom';
-		this.data = '!TODO';
+		this.data = {
+			contact: {
+				username: '',
+				name: '',
+				group: ''
+			},
+			contacts: []
+		};
 	}
 
 	public ready(): void {
