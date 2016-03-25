@@ -1,4 +1,6 @@
 node_modules/
+cache/
+release/
 css/dist/
 js/dist/
 js/intercom.js
@@ -11,3 +13,4 @@ typings/vue/
 typings/tsd.d.ts
 tsd.json
 *.wav
+*.zip
