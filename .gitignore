@@ -1,5 +1,6 @@
 node_modules/
 cache/
+src/
 release/
 css/dist/
 js/dist/
@@ -14,3 +15,4 @@ typings/tsd.d.ts
 tsd.json
 *.wav
 *.zip
+*.7z

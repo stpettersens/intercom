@@ -57,7 +57,7 @@ class Intercom extends VueInstance {
 		}
 		else {
 			$(btn).attr('href', first);
-			$(btn).text(`${caption} ${first.subtr(1, first.length)}`);
+			$(btn).text(`${caption} ${first.substr(1, first.length)}`);
 			on = true;
 		}
 		return on;

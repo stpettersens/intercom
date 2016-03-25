@@ -12,6 +12,7 @@ const gulp = require('gulp'),
 	rename = require('gulp-rename'),
   electron = require('gulp-atom'),
 	 clean = require('gulp-rimraf'),
+	  asar = require('asar'),
      _exec = require('child_process').exec;
 
 let header = [
@@ -69,12 +70,19 @@ gulp.task('dist-js', function() {
 });
 
 gulp.task('bundle-src', ['dist-css','dist-js'], function() {
-	return gulp.src(['main.js','index.html','package.json',
-	'css/**/**/*','js/**/**/*'], {base: '.'})
+	return gulp.src([
+		'main.js','index.html','package.json',
+		'css/**/**/*','js/**/**/*'
+	], {base: '.'})
 	.pipe(gulp.dest('src'));
 });
 
-gulp.task('bundle-app', ['bundle-src'], function() {
+gulp.task('deps', ['bundle-src'], function() {
+	console.log('Installing production dependencies via npm.');
+	_exec('cd release/v0.36.10/win32-ia32/resources/app && npm install --production');
+});
+
+gulp.task('app', function() {
 	return electron({
 		srcPath: './src',
 		releasePath: './release',
@@ -85,23 +93,21 @@ gulp.task('bundle-app', ['bundle-src'], function() {
 	});
 });
 
-gulp.task('sign-app', ['bundle-app'], function() {
-	// TODO
+gulp.task('pkg', function() {
+	asar.createPackage('release/v0.36.10/win32-ia32/resources/app',
+	'release/v0.36.10/win32-ia32/resources/app.asar', function() {
+		console.log('app.asar built.');
+	});
 });
 
-gulp.task('app', ['sign-app'], function() {
-	return gulp.src('release/**/*')
-	.pipe(zip('intercom.zip'))
-	.pipe(gulp.dest('.'));
-});
-
-gulp.task('nsis', ['app'], function() {
-	_exec('makensis intercom.nsis');
-	// TODO in NSIS script: npm install --production
+gulp.task('nsis', function() {
+	console.log('Building NSIS setup executable.');
+	_exec('start makensis intercom.nsi');
 });
 
 gulp.task('clean', function() {
-	return gulp.src(['css/dist','js/dist','src','release'], {read: false})
+	return gulp.src(['css/dist','js/dist','src','release',
+	'*.zip','*.7z'], {read: false})
 	.pipe(clean());
 });
 
