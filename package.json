@@ -6,7 +6,9 @@
   "scripts": {
     "setup": "gulp dist",
     "build": "gulp app && gulp deps && gulp pkg",
+    "build-all": "gulp && gulp app && gulp deps && gulp pkg",
     "nsis": "gulp nsis",
+    "vue": "gulp",
     "start": "gulp && electron main.js"
   },
   "keywords": [
@@ -30,6 +32,7 @@
     "gulp-typescript": "^2.12.1",
     "gulp-vuecc": "^0.1.0",
     "gulp-zip": "^3.2.0",
+    "startt": "^1.0.0",
     "vue": "^1.0.17"
   },
   "dependencies": {

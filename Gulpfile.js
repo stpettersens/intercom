@@ -13,7 +13,15 @@ const gulp = require('gulp'),
   electron = require('gulp-atom'),
 	 clean = require('gulp-rimraf'),
 	  asar = require('asar'),
+	    fs = require('fs'),
+	startt = require('startt'),
      _exec = require('child_process').exec;
+
+const ELECTRON = 'v0.36.12';
+const platforms = [
+	'win32-x64',
+	'linux-x64'
+];
 
 let header = [
 	'/*', '\tIntercom.', '\tP2P chat application.', 
@@ -25,6 +33,15 @@ let _import = [
 	"\n\n'use strict';\n", 
 	"const storage = require('electron-json-storage');\n\n"
 ];
+
+gulp.task('mkdirs', function() {
+	if(!fs.existsSync('src')) {
+		fs.mkdirSync('src');
+	}
+	if(!fs.existsSync('release')) {
+		fs.mkdirSync('release');
+	}
+});
 
 gulp.task('vuecc', function() {
 	return gulp.src('intercom.vue.ts', {read: false})
@@ -79,30 +96,43 @@ gulp.task('bundle-src', ['dist-css','dist-js'], function() {
 
 gulp.task('deps', ['bundle-src'], function() {
 	console.log('Installing production dependencies via npm.');
-	_exec('cd release/v0.36.10/win32-ia32/resources/app && npm install --production');
+	platforms.map(function(platform) {
+		let d = `cd release/${ELECTRON}/${platform}/resources/app`;
+		d += ' && npm install --production';
+		_exec(d);
+	});
 });
 
-gulp.task('app', function() {
+gulp.task('electron', ['mkdirs'], function() {
 	return electron({
 		srcPath: './src',
 		releasePath: './release',
 		cachePath: './cache',
-		version: 'v0.36.10',
+		version: `${ELECTRON}`,
 		rebuild: false,
-		platforms: ['win32-ia32']
+		platforms: platforms
+	});
+});
+
+gulp.task('app', ['electron'], function() {
+	platforms.map(function(platform) {
+		gulp.src('license.txt')
+		.pipe(gulp.dest(`release/${ELECTRON}/${platform}`));
 	});
 });
 
 gulp.task('pkg', function() {
-	asar.createPackage('release/v0.36.10/win32-ia32/resources/app',
-	'release/v0.36.10/win32-ia32/resources/app.asar', function() {
-		console.log('app.asar built.');
+	platforms.map(function(platform) {
+		asar.createPackage(`release/${ELECTRON}/${platform}/resources/app`,
+		`release/${ELECTRON}/${platform}/resources/app.asar`, function() {
+			console.log(`app.asar built for ${platform}.`);
+		});
 	});
 });
 
 gulp.task('nsis', function() {
 	console.log('Building NSIS setup executable.');
-	_exec('start makensis intercom.nsi');
+	startt('makensis intercom.nsi');
 });
 
 gulp.task('clean', function() {

@@ -4,6 +4,8 @@
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "Intercom"
 !define PRODUCT_VERSION "1.0"
+!define ELECTRON_VERSION "v0.36.12"
+!define ELECTRON_PLATFORM "win32-x64"
 !define PRODUCT_PUBLISHER "Sam Saint-Pettersen"
 !define PRODUCT_WEB_SITE "https://github.com/stpettersens/intercom"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\electron.exe"
@@ -47,7 +49,7 @@ ShowUnInstDetails show
 
 Function installFont
   DetailPrint "Installing Kuzmann Sans font..."
-  nsExec::ExecToStack `$INSTDIR\install_font.cmd`
+  nsExec::ExecToStack `cmd /C $INSTDIR\install_font.cmd`
   Pop $0 ; Pop return code from program from stack.
   Pop $1 ; Pop stdout from program from stack.
   DetailPrint $1
@@ -57,7 +59,7 @@ Section "MainSection" SEC01
   SetOutPath "$INSTDIR"
   SetOverwrite ifnewer
 
-  !define ELECTRON "release\v0.36.10\win32-ia32"
+  !define ELECTRON "release\${ELECTRON_VERSION}\${ELECTRON_PLATFORM}"
 
   DetailPrint "Installing Intercom..."
   File "${ELECTRON}\*.pak"
@@ -118,8 +120,19 @@ FunctionEnd
 Section Uninstall
   Delete "$INSTDIR\${PRODUCT_NAME}.url"
   Delete "$INSTDIR\uninst.exe"
-  RMDir /r "$INSTDIR\locales"
-  RMDir /r "$INSTDIR\resources"
+  Delete "$INSTDIR\locales\*.pak"
+  Delete "$INSTDIR\resources\*.asar"
+  Delete "$INSTDIR\*.pak"
+  Delete "$INSTDIR\*.dat"
+  Delete "$INSTDIR\*.dll"
+  Delete "$INSTDIR\*.bin"
+  Delete "$INSTDIR\version"
+  Delete "$INSTDIR\*.exe"
+  Delete "$INSTDIR\LICENSE"
+  Delete "$INSTDIR\*.html"
+  Delete "$INSTDIR\*.txt"
+  Delete "$INSTDIR\Kazmann Sans.ttf"
+  Delete "$INSTDIR\install_font.cmd"
 
   Delete "$SMPROGRAMS\Intercom\Uninstall.lnk"
   Delete "$SMPROGRAMS\Intercom\Website.lnk"
@@ -127,6 +140,8 @@ Section Uninstall
   Delete "$SMPROGRAMS\Intercom\Intercom.lnk"
 
   RMDir "$SMPROGRAMS\Intercom"
+  RMDir "$INSTDIR\locales"
+  RMDir "$INSTDIR\resources"
   RMDir "$INSTDIR"
 
   DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
