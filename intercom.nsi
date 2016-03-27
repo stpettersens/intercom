@@ -5,7 +5,8 @@
 !define PRODUCT_NAME "Intercom"
 !define PRODUCT_VERSION "1.0"
 !define ELECTRON_VERSION "v0.36.12"
-!define ELECTRON_PLATFORM "win32-x64"
+!define LPLATFORM "win32-x64"
+!define SPLATFORM "x64"
 !define PRODUCT_PUBLISHER "Sam Saint-Pettersen"
 !define PRODUCT_WEB_SITE "https://github.com/stpettersens/intercom"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\electron.exe"
@@ -41,7 +42,7 @@
 ; MUI end ------
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "intercom_setup.exe"
+OutFile "intercom_setup_${SPLATFORM}.exe"
 InstallDir "$PROGRAMFILES\Intercom"
 InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
 ShowInstDetails show
@@ -59,7 +60,7 @@ Section "MainSection" SEC01
   SetOutPath "$INSTDIR"
   SetOverwrite ifnewer
 
-  !define ELECTRON "release\${ELECTRON_VERSION}\${ELECTRON_PLATFORM}"
+  !define ELECTRON "release\${ELECTRON_VERSION}\${LPLATFORM}"
 
   DetailPrint "Installing Intercom..."
   File "${ELECTRON}\*.pak"

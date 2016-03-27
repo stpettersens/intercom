@@ -8,6 +8,7 @@ const gulp = require('gulp'),
 	 vuecc = require('gulp-vuecc'),
 	   tsc = require('gulp-typescript'),
 	   zip = require('gulp-zip'),
+  sequence = require('gulp-sequence'),
 	insert = require('gulp-insert'),
 	rename = require('gulp-rename'),
   electron = require('gulp-atom'),
@@ -19,6 +20,7 @@ const gulp = require('gulp'),
 
 const ELECTRON = 'v0.36.12';
 const platforms = [
+	'win32-ia32',
 	'win32-x64',
 	'linux-x64'
 ];
@@ -118,6 +120,14 @@ gulp.task('app', ['electron'], function() {
 	platforms.map(function(platform) {
 		gulp.src('license.txt')
 		.pipe(gulp.dest(`release/${ELECTRON}/${platform}`));
+		if(/linux|darwin/.test(platform)) {
+			gulp.src('fonts/install_font.sh')
+			.pipe(gulp.dest(`release/${ELECTRON}/${platform}`));
+		}
+		else {
+			gulp.src('fonts/install_font.cmd')
+			.pipe(gulp.dest(`release/${ELECTRON}/${platform}`));
+		}
 	});
 });
 
@@ -132,7 +142,14 @@ gulp.task('pkg', function() {
 
 gulp.task('nsis', function() {
 	console.log('Building NSIS setup executable.');
-	startt('makensis intercom.nsi');
+	let winbuilds = platforms.filter(function(platform) {
+		if(!platform.indexOf('win')) return platform;
+	});
+	winbuilds.map(function(lp) {
+		let sp = lp.split('-')[1].replace('ia32', 'x86');
+		startt(`makensis intercom.nsi /DELECTRON_VERSION=${ELECTRON}`
+		+ ` /DLPLATFORM=${lp} /DSPLATFORM=${sp}`);
+	});
 });
 
 gulp.task('clean', function() {
@@ -142,4 +159,6 @@ gulp.task('clean', function() {
 });
 
 gulp.task('default', ['clean-build'], function(){});
-gulp.task('dist', ['dist-css','dist-js'], function(){});
+gulp.task('setup', ['dist-css','dist-js'], function(){});
+gulp.task('build', sequence('app', 'deps', 'pkg'));
+gulp.task('build-all', sequence('default', 'build'));
