@@ -32,8 +32,8 @@ class Intercom extends VueInstance {
 	}
 
 	public ready(): void {
-		let data = JSON.parse(fs.readFileSync('defaults.json', 'utf-8').toString());
-		sessionStorage.setItem('server', `${data.host}:${data.port}`);
+		/*let data = JSON.parse(fs.readFileSync('defaults.json', 'utf-8').toString());
+		sessionStorage.setItem('server', `${data.host}:${data.port}`);*/
 		if(sessionStorage.getItem('init') === null) {
 			sessionStorage.setItem('init', 'true');
 			window.location.reload();
