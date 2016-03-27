@@ -33,7 +33,8 @@ let header = [
 
 let _import = [
 	"\n\n'use strict';\n", 
-	"const storage = require('electron-json-storage');\n\n"
+	"const storage = require('electron-json-storage');",
+	"const fs = require('fs');\n\n"
 ];
 
 gulp.task('mkdirs', function() {
@@ -160,5 +161,5 @@ gulp.task('clean', function() {
 
 gulp.task('default', ['clean-build'], function(){});
 gulp.task('setup', ['dist-css','dist-js'], function(){});
-gulp.task('build', sequence('app', 'deps', 'pkg'));
-gulp.task('build-all', sequence('default', 'build'));
+gulp.task('build', sequence('app','deps','pkg'));
+gulp.task('build-all', sequence('default','build'));

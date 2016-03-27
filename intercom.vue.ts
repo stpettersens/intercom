@@ -15,6 +15,7 @@
 
 import $ = require('jquery');
 import storage = require('electron-json-storage');
+import fs = require('fs');
 
 class Intercom extends VueInstance {
 	constructor() {
@@ -31,6 +32,8 @@ class Intercom extends VueInstance {
 	}
 
 	public ready(): void {
+		let data = JSON.parse(fs.readFileSync('defaults.json', 'utf-8').toString());
+		sessionStorage.setItem('server', `${data.host}:${data.port}`);
 		if(sessionStorage.getItem('init') === null) {
 			sessionStorage.setItem('init', 'true');
 			window.location.reload();

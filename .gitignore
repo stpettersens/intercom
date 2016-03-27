@@ -12,7 +12,6 @@ typings/jquery/
 typings/node/
 typings/vue/
 typings/tsd.d.ts
-tsd.json
 *.wav
 *.zip
 *.7z
