@@ -42,7 +42,7 @@
 ; MUI end ------
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "intercom_setup_${SPLATFORM}.exe"
+OutFile "dist/intercom_setup_${SPLATFORM}.exe"
 InstallDir "$PROGRAMFILES\Intercom"
 InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
 ShowInstDetails show
