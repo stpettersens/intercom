@@ -162,7 +162,7 @@ gulp.task('pkg', function() {
 
 gulp.task('zip', ['mkdirs'], function() {
 	platforms.map(function(platform) {
-		gulp.src(`release/${ELECTRON}/${platform}/*`)
+		gulp.src(`release/${ELECTRON}/${platform}/*/**`)
 		.pipe(zip(`intercom_${platform}.zip`))
 		.pipe(gulp.dest('dist'));
 	});
@@ -230,3 +230,5 @@ gulp.task('default', ['clean-build'], function(){});
 gulp.task('setup', ['dist-css','dist-js'], function(){});
 gulp.task('build', sequence('app','deps'));
 gulp.task('build-all', sequence('default','build'));
+// Run pkg with build-all from npm using:
+// `npm run build`.
