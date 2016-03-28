@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "P2P chat application",
   "main": "main.js",
+  "private": true,
   "scripts": {
     "start": "gulp && electron main.js",
     "build": "gulp build-all && gulp pkg",
