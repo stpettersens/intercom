@@ -2,6 +2,7 @@ node_modules/
 cache/
 src/
 release/
+dist/
 css/dist/
 js/dist/
 js/intercom.js

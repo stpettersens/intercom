@@ -5,6 +5,7 @@
 'use strict';
 
 const gulp = require('gulp'),
+      data = require('gulp-data'),
 	 vuecc = require('gulp-vuecc'),
 	   tsc = require('gulp-typescript'),
 	   zip = require('gulp-zip'),
@@ -25,6 +26,8 @@ const platforms = [
 	'linux-x64'
 ];
 
+let metadata = {};
+
 let header = [
 	'/*', '\tIntercom.', '\tP2P chat application.', 
 	'\tCopyright 2016 Sam Saint-Pettersen.',
@@ -37,12 +40,28 @@ let _import = [
 	"const fs = require('fs');\n\n"
 ];
 
+gulp.task('metadata', function() {
+	return gulp.src('package.json')
+	.pipe(data(function(pkg) {
+		let p = JSON.parse(pkg.contents.toString());
+		metadata = {
+			name: p.name,
+			author: p.author,
+			version: p.version,
+			description: p.description
+		};
+	}));
+});
+
 gulp.task('mkdirs', function() {
 	if(!fs.existsSync('src')) {
 		fs.mkdirSync('src');
 	}
 	if(!fs.existsSync('release')) {
 		fs.mkdirSync('release');
+	}
+	if(!fs.existsSync('dist')) {
+		fs.mkdirSync('dist');
 	}
 });
 
@@ -141,6 +160,54 @@ gulp.task('pkg', function() {
 	});
 });
 
+gulp.task('zip', ['mkdirs'], function() {
+	platforms.map(function(platform) {
+		gulp.src(`release/${ELECTRON}/${platform}/*`)
+		.pipe(zip(`intercom_${platform}.zip`))
+		.pipe(gulp.dest('dist'));
+	});
+});
+
+gulp.task('deb', ['metadata','mkdirs'], function() {
+	console.log('Building Debian package.');
+	let deb = {
+		Package: metadata.name,
+		Version: `${metadata.version.substr(0, 3)}-1`,
+		Section: 'base',
+		Priority: 'optional',
+		Architecture: 'i386',
+		Maintainer: metadata.author,
+		Description: metadata.description
+	};
+	let _opath = `../release/${ELECTRON}`;
+	let _ipath = 'opt/intercom';
+	let target = platforms.filter(function(platform) {
+		if(!platform.indexOf('linux')) return platform;
+	});
+	let ctrl = [];
+	let build = [
+		'#!/bin/sh',
+		`mkdir -p ${deb.Package}_${deb.Version}/${_ipath}`,
+		`cp -r -v ${_opath}/${target[0]}/* ${deb.Package}_${deb.Version}/${_ipath}`,
+		`dpkg-deb --build ${deb.Package}_${deb.Version}`
+	];
+	for(let key in deb) {
+		ctrl.push(`${key}: ${deb[key]}`);
+	}
+	ctrl.push('');
+	if(!fs.existsSync(`dist/intercom_${deb.Version}`)) {
+		fs.mkdir(`dist/intercom_${deb.Version}`);
+	}
+
+	if(!fs.existsSync(`dist/intercom_${deb.Version}/DEBIAN`)) {
+		fs.mkdir(`dist/intercom_${deb.Version}/DEBIAN`);
+	}
+
+	fs.writeFileSync(`dist/intercom_${deb.Version}/DEBIAN/control`, ctrl.join('\n'), 'utf-8');
+	fs.writeFileSync('dist/deb-build.sh', build.join('\n'), 'utf-8');
+	//_exec('sh dist/deb-build.sh');
+});
+
 gulp.task('nsis', function() {
 	console.log('Building NSIS setup executable.');
 	let winbuilds = platforms.filter(function(platform) {
@@ -154,12 +221,12 @@ gulp.task('nsis', function() {
 });
 
 gulp.task('clean', function() {
-	return gulp.src(['css/dist','js/dist','src','release',
+	return gulp.src(['css/dist','js/dist','src','release','dist',
 	'*.zip','*.7z'], {read: false})
 	.pipe(clean());
 });
 
 gulp.task('default', ['clean-build'], function(){});
 gulp.task('setup', ['dist-css','dist-js'], function(){});
-gulp.task('build', sequence('app','deps','pkg'));
+gulp.task('build', sequence('app','deps'));
 gulp.task('build-all', sequence('default','build'));
