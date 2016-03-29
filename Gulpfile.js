@@ -6,7 +6,7 @@
 
 const gulp = require('gulp'),
       data = require('gulp-data'),
-	 vuecc = require('gulp-vuecc'),
+     vuecc = require('gulp-vuecc'),
 	   tsc = require('gulp-typescript'),
 	   zip = require('gulp-zip'),
 	   deb = require('gulp-debian'),
@@ -194,8 +194,7 @@ gulp.task('deb-build', ['metadata','mkdirs'], function() {
 		maintainer: metadata.author,
 		description: metadata.description,
 		_target: 'opt/intercom',
-		_out: 'dist',
-		_ignore: ['app','default_app']
+		_out: 'dist'
 	}));
 });
 
