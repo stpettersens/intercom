@@ -1,0 +1,8 @@
+{
+  "ambientDependencies": {
+    "bootbox": "registry:dt/bootbox#4.4.0+20160326162245",
+    "electron-json-storage": "registry:dt/electron-json-storage#0.0.0+20160324000215",
+    "jquery": "registry:dt/jquery#1.10.0+20160316155526",
+    "node": "registry:dt/node#4.0.0+20160412142033"
+  }
+}

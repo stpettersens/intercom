@@ -12,6 +12,10 @@ typings/github-electron/
 typings/jquery/
 typings/node/
 typings/vue/
+typings/browser/
+typings/main/
+typings/browser.d.ts
+typings/main.d.ts
 typings/tsd.d.ts
 *.wav
 *.zip

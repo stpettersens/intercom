@@ -5,10 +5,7 @@
     Released under the MIT/X11 License.
 */
 
-/// <reference path="typings/node/node.d.ts" />
-/// <reference path="typings/bootbox/bootbox.d.ts" />
-/// <reference path="typings/jquery/jquery.d.ts" />
-/// <reference path="typings/electron-json-storage/electron-json-storage.d.ts" />
+/// <reference path="typings/main.d.ts" />
 /// <reference path="typings/intercom/vue-instance.ts" />
 /// <reference path="typings/intercom/audio.ts" />
 /// <reference path="typings/intercom/configuration.ts" />
