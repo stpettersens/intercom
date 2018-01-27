@@ -36,7 +36,7 @@
     "vue": "^1.0.17"
   },
   "dependencies": {
-    "jquery": "^2.2.1",
+    "jquery": "*",
     "binaryjs": "^0.2.1",
     "electron-json-storage": "^2.0.0",
     "n2n": "0.0.7",
